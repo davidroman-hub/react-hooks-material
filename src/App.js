@@ -1,4 +1,54 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
+
+//REAL APLICATION
+
+const App = () => {
+
+  //state
+
+  const [news,setNews ] = useState ([])
+
+  //Method fetch news
+
+  const fetchNews = () => {
+    fetch('http://hn.algolia.com/api/v1/search?query=react')
+    .then(result => result.json() )
+    //.then(data=> console.log(data));
+    .then(data => setNews(data.hits))
+    .catch(error => console.log(error))
+  };
+  useEffect(() => {
+      fetchNews()
+  })
+
+  return(
+    <div>
+      <h2>News</h2>
+      {news.map((n,i) => (
+      <p key={i}> {n.title}</p>
+      )) }
+    </div>
+  )
+} ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////  class component //////////////
+
+
 
 // class App extends Component {
 
@@ -12,6 +62,17 @@ import React, { Component, useState } from 'react';
 //   });
 // } ;
 
+
+//  /// for change thew title as a click ///
+
+// componentDidMount(){
+//   document.title = `Clicked ${this.state.count} times`
+// }
+// componentDidUpdate(){
+//   document.title = `Clicked ${this.state.count} times`
+// }
+
+
 //   render(){
 //     return(
 //       <div>
@@ -22,21 +83,28 @@ import React, { Component, useState } from 'react';
 //   }
 // }
 
-const App = () => {
-      const [count, setCount] = useState(0)
 
-      const increment = () => {
-        setCount(count + 1)
-      } 
+//////////////////// hooks buttom /////////////
 
-    return(
-     <div>
-          <h2> Counter App</h2>
-    <button onClick={ increment }> Clicked {count} times</button> 
+  // const App = () => {
+  //       const [count, setCount] = useState(0)
 
-     </div> 
-    )
+  //       useEffect(() => { 
+  //         document.title = `Clicked ${ count } times`
+  //       } )
 
-}
+  //       const increment = () => {
+  //         setCount(count + 1)
+  //       } 
+
+  //     return(
+  //     <div>
+  //           <h2> Counter App</h2>
+  //     <button onClick={ increment }> Clicked {count} times</button> 
+
+  //     </div> 
+  //     )
+
+  // }
 
 export default App;
