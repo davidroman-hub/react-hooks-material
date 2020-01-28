@@ -5,7 +5,7 @@ import React, { Component, useState, useEffect } from 'react';
 const App = () => {
 
   //state
-
+//            setState
   const [news,setNews ] = useState ([])
 
   //Method fetch news
@@ -14,9 +14,11 @@ const App = () => {
     fetch('http://hn.algolia.com/api/v1/search?query=react')
     .then(result => result.json() )
     //.then(data=> console.log(data));
-    .then(data => setNews(data.hits))
+    .then(data => setNews(data.hits)) //data hits for one by one (20 news in array)
     .catch(error => console.log(error))
   };
+
+  /// we need to run this method and we gonna used with useEffect
   useEffect(() => {
       fetchNews()
   })
