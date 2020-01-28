@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 //REAL APLICATION
 
@@ -7,11 +7,11 @@ const App = () => {
   //state
 //            setState
   const [news,setNews ] = useState ([])
-
+  const [searchQuery, setSearchQuery] = useState ('react') 
   //Method fetch news
 
   const fetchNews = () => {
-    fetch('http://hn.algolia.com/api/v1/search?query=react')
+    fetch(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
     .then(result => result.json() )
     //.then(data=> console.log(data));
     .then(data => setNews(data.hits)) //data hits for one by one (20 news in array)
@@ -20,12 +20,20 @@ const App = () => {
 
   /// we need to run this method and we gonna used with useEffect
   useEffect(() => {
-      fetchNews()
-  })
+      fetchNews();
+  },[searchQuery]);
+
+  const handleChange = e => {
+    setSearchQuery(e.target.value)
+  }
 
   return(
     <div>
       <h2>News</h2>
+      <form>
+        <input type="text" value={searchQuery} onChange={handleChange}/>
+        <button>Search</button>
+      </form>
       {news.map((n,i) => (
       <p key={i}> {n.title}</p>
       )) }
